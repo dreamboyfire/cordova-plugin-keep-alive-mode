@@ -1,11 +1,15 @@
 package com.dreamboyfire.cordova.plugin.keep_alive_mode;
 
+import android.content.Intent;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import javax.crypto.spec.OAEPParameterSpec;
+import java.util.Map;
 
 /**
  * This class echoes a string called from JavaScript.
@@ -23,7 +27,7 @@ public class CordovaKeepAliveMode extends CordovaPlugin {
         }
 
         if (action.equals(ACTION_METHOD_ENABLE)) {
-            this.enable(callbackContext);
+            this.enable(args, callbackContext);
             return true;
         }
         return false;
@@ -37,7 +41,21 @@ public class CordovaKeepAliveMode extends CordovaPlugin {
         }
     }
 
-    private void enable(CallbackContext callbackContext) {
-        callbackContext.success("true");
+    private void enable(JSONArray args, CallbackContext callbackContext) {
+        if (args != null && args.length() > 0) {
+            try {
+                JSONObject opt = args.getJSONObject(0);
+
+                Intent intent = new Intent(cordova.getActivity(), AlarmReceiver.class);
+                intent.setAction(AlarmReceiver.ACTION_ALARM_START);
+                intent.putExtra("opt", opt.toString());
+                cordova.getActivity().sendBroadcast(intent);
+
+                callbackContext.success(opt);
+            } catch (Exception e) {
+                e.printStackTrace();
+                callbackContext.error("json 解析出错");
+            }
+        }
     }
 }

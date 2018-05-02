@@ -1,6 +1,6 @@
 {
   "name": "cordova-plugin-keep-alive-mode",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "定时唤醒app",
   "main": "index.js",
   "scripts": {
