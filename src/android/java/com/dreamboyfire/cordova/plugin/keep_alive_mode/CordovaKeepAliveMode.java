@@ -12,11 +12,18 @@ import org.json.JSONObject;
  */
 public class CordovaKeepAliveMode extends CordovaPlugin {
 
+    private static final String ACTION_METHOD_ENABLE = "enable";
+
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         if (action.equals("coolMethod")) {
             String message = args.getString(0);
             this.coolMethod(message, callbackContext);
+            return true;
+        }
+
+        if (action.equals(ACTION_METHOD_ENABLE)) {
+            this.enable(callbackContext);
             return true;
         }
         return false;
@@ -28,5 +35,9 @@ public class CordovaKeepAliveMode extends CordovaPlugin {
         } else {
             callbackContext.error("Expected one non-empty string argument.");
         }
+    }
+
+    private void enable(CallbackContext callbackContext) {
+        callbackContext.success("true");
     }
 }

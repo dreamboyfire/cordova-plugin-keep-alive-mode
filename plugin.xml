@@ -8,11 +8,11 @@
     <platform name="android">
         <config-file parent="/*" target="res/xml/config.xml">
             <feature name="CordovaKeepAliveMode">
-                <param name="android-package" value="cordova-plugin-keep-alive-mode.CordovaKeepAliveMode"/>
+                <param name="android-package" value="com.dreamboyfire.cordova.plugin.keep_alive_mode.CordovaKeepAliveMode"/>
             </feature>
         </config-file>
         <config-file parent="/*" target="AndroidManifest.xml"></config-file>
-        <source-file src="src/android/CordovaKeepAliveMode.java"
-                     target-dir="src/cordova-plugin-keep-alive-mode/CordovaKeepAliveMode"/>
+        <source-file src="src/android/java/com/dreamboyfire/cordova/plugin/keep_alive_mode/CordovaKeepAliveMode.java"
+                     target-dir="src/com/dreamboyfire/cordova/plugin/keep_alive_mode"/>
     </platform>
 </plugin>
