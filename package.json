@@ -1,0 +1,19 @@
+{
+  "name": "cordova-plugin-keep-alive-mode",
+  "version": "1.0.0",
+  "description": "定时唤醒app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dreamboyfire/cordova-plugin-keep-alive-mode.git"
+  },
+  "author": "dreamboyfire",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dreamboyfire/cordova-plugin-keep-alive-mode/issues"
+  },
+  "homepage": "https://github.com/dreamboyfire/cordova-plugin-keep-alive-mode#readme"
+}
