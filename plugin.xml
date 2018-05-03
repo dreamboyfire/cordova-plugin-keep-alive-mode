@@ -8,6 +8,7 @@
     </js-module>
     <platform name="android">
         <framework src="com.alibaba:fastjson:1.2.10"/>
+        <framework src="com.android.support:appcompat-v7:26.+"/>
 
         <config-file parent="/*" target="res/xml/config.xml">
             <feature name="CordovaKeepAliveMode">
@@ -17,12 +18,15 @@
         <config-file parent="/*" target="AndroidManifest.xml"></config-file>
 
         <config-file parent="/manifest/application" target="AndroidManifest.xml">
+            <service android:name="com.dreamboyfire.cordova.plugin.keep_alive_mode.BackgroundTaskService" />
             <receiver android:name="com.dreamboyfire.cordova.plugin.keep_alive_mode.AlarmReceiver" />
         </config-file>
 
         <source-file src="src/android/java/com/dreamboyfire/cordova/plugin/keep_alive_mode/CordovaKeepAliveMode.java"
                      target-dir="src/com/dreamboyfire/cordova/plugin/keep_alive_mode"/>
         <source-file src="src/android/java/com/dreamboyfire/cordova/plugin/keep_alive_mode/AlarmReceiver.java"
+                     target-dir="src/com/dreamboyfire/cordova/plugin/keep_alive_mode"/>
+        <source-file src="src/android/java/com/dreamboyfire/cordova/plugin/keep_alive_mode/BackgroundTaskService.java"
                      target-dir="src/com/dreamboyfire/cordova/plugin/keep_alive_mode"/>
     </platform>
 </plugin>

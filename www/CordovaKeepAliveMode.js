@@ -7,6 +7,10 @@ const _option = {
     toastTips: null//Toast提示信息，默认为null，为null不执行Toast提示
 };
 
+const _eventbus = {
+
+};
+
 exports.EVENT_ENABLE = "EVENT_ENABLE";
 
 exports.coolMethod = function (arg0, success, error) {

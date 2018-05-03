@@ -1,6 +1,9 @@
 package com.dreamboyfire.cordova.plugin.keep_alive_mode;
 
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
+import android.os.IBinder;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
 
@@ -17,6 +20,21 @@ import java.util.Map;
 public class CordovaKeepAliveMode extends CordovaPlugin {
 
     private static final String ACTION_METHOD_ENABLE = "enable";
+
+    @Override
+    public void onResume(boolean multitasking) {
+        super.onResume(multitasking);
+    }
+
+    @Override
+    public void onPause(boolean multitasking) {
+        super.onPause(multitasking);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
 
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
@@ -45,6 +63,30 @@ public class CordovaKeepAliveMode extends CordovaPlugin {
         if (args != null && args.length() > 0) {
             try {
                 JSONObject opt = args.getJSONObject(0);
+
+                /**
+                 * 启动后台任务service进程
+                 */
+                Intent serviceIntent = new Intent(cordova.getActivity(), BackgroundTaskService.class);
+                cordova.getActivity().bindService(serviceIntent, new ServiceConnection() {
+                    @Override
+                    public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+
+                    }
+
+                    @Override
+                    public void onServiceDisconnected(ComponentName componentName) {
+
+                    }
+                }, cordova.getActivity().BIND_AUTO_CREATE);
+
+//                cordova.getActivity().startService(serviceIntent);
+
+                if (android.os.Build.VERSION.SDK_INT >= 26) {
+                    cordova.getActivity().startForegroundService(serviceIntent);
+                } else {
+                    cordova.getActivity().startService(serviceIntent);
+                }
 
                 Intent intent = new Intent(cordova.getActivity(), AlarmReceiver.class);
                 intent.setAction(AlarmReceiver.ACTION_ALARM_START);

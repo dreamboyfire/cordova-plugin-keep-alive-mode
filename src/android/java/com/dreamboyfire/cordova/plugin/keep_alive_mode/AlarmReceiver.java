@@ -38,7 +38,7 @@ public class AlarmReceiver extends BroadcastReceiver {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            if (isStop) {
+            /*if (isStop) {
                 if (pendingIntent != null) {
                     AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
                     am.cancel(pendingIntent);
@@ -46,8 +46,14 @@ public class AlarmReceiver extends BroadcastReceiver {
                 }
             } else {
                 setAlarm(context);
-            }
+            }*/
+
+            setAlarm(context);
         }
+
+//        Intent serviceIntent = new Intent(context, BackgroundTaskService.class);
+//        context.startService(serviceIntent);
+
 
         if (intent.getAction().equals(ACTION_ALARM_STOP)) {
             isStop = true;
