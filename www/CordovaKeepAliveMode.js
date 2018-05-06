@@ -7,9 +7,7 @@ const _option = {
     toastTips: null//Toast提示信息，默认为null，为null不执行Toast提示
 };
 
-const _eventbus = {
-
-};
+var _eventbus = {};
 
 exports.EVENT_ENABLE = "EVENT_ENABLE";
 
@@ -17,8 +15,8 @@ exports.coolMethod = function (arg0, success, error) {
     exec(success, error, 'CordovaKeepAliveMode', 'coolMethod', [arg0]);
 };
 
-exports.enable = function (option) {
-    var promise = new Promise(function (resovle, reject) {
+exports.enable = function (option, success, error) {
+    /*var promise = new Promise(function (resovle, reject) {
         var success = function (result) {
             // emitter.emit(exports.EVENT_ENABLE, result);
             resovle(result);
@@ -36,14 +34,37 @@ exports.enable = function (option) {
         exec(success, error, "CordovaKeepAliveMode", "enable", [option]);
     });
 
-    return promise;
+    return promise;*/
+
+    exec(success, error, "CordovaKeepAliveMode", "enable", [option]);
 };
-/*
-exports.on = function (eventName) {
-    var promise = new Promise(function (resolve, reject) {
-        emitter.on(eventName, function (data) {
-            resolve(data);
-        });
-    });
-    return promise;
-};*/
+
+exports.on = function (eventName, callback, scope) {
+
+    if (!_eventbus[eventName]) {
+        _eventbus[eventName] = [];
+    }
+
+    var item = [callback, scope || window];
+
+    _eventbus[eventName].push(item);
+};
+
+
+/**
+ * 事件监听
+ */
+exports.fireEvent = function (event) {
+    var args = Array.apply(null, arguments).slice(1),
+        listener = _eventbus[event];
+
+    if (!listener)
+        return;
+
+    for (var i = 0; i < listener.length; i++) {
+        var fn    = listener[i][0],
+            scope = listener[i][1];
+
+        fn.apply(scope, args);
+    }
+};

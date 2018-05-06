@@ -9,6 +9,7 @@ import android.os.Build;
 import android.widget.Toast;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import org.apache.cordova.CallbackContext;
 
 public class AlarmReceiver extends BroadcastReceiver {
 
@@ -22,6 +23,8 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     private PendingIntent pendingIntent = null;
 
+    private CallbackContext callbackContext = null;
+
     @Override
     public void onReceive(Context context, Intent intent) {
 
@@ -33,6 +36,8 @@ public class AlarmReceiver extends BroadcastReceiver {
         }
 
         if (intent.getAction().equals(ACTION_ALARM_RUN)) {
+            CordovaKeepAliveMode.fireEvent("timeout", "test");
+
             try {
                 Toast.makeText(context, option.getString("toastTips"), Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
@@ -64,11 +69,16 @@ public class AlarmReceiver extends BroadcastReceiver {
             }
         }
 
+        Toast.makeText(context, intent.getAction(), Toast.LENGTH_SHORT).show();
+        if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)) {
+            Toast.makeText(context, "屏幕亮起了", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     private void setAlarm(Context context) {
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(context, AlarmReceiver.class);
+        Intent intent = new Intent();
         intent.setAction(ACTION_ALARM_RUN);
         pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -81,5 +91,13 @@ public class AlarmReceiver extends BroadcastReceiver {
             }
             am.setAlarmClock(info, pendingIntent);
         }
+    }
+
+    public CallbackContext getCallbackContext() {
+        return callbackContext;
+    }
+
+    public void setCallbackContext(CallbackContext callbackContext) {
+        this.callbackContext = callbackContext;
     }
 }

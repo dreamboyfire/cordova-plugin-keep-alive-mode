@@ -28,7 +28,7 @@ public class BackgroundTaskService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        NOTIFICATION_ID = startId;
+//        NOTIFICATION_ID = startId;
 
         Toast.makeText(getApplicationContext(), "onStartCommand", Toast.LENGTH_SHORT).show();
 
@@ -42,10 +42,18 @@ public class BackgroundTaskService extends Service {
 
         startForeground(NOTIFICATION_ID, notification);
 
-        Intent innerIntent = new Intent(this, InnerService.class);
-        startService(innerIntent);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                manager.cancel(NOTIFICATION_ID);
+            }
+        },1000);
 
-        return super.onStartCommand(intent, flags, startId);
+        Intent cancelNotificationServiceIntent = new Intent(this, CancelNotificationService.class);
+        startService(cancelNotificationServiceIntent);
+
+        return START_STICKY;
     }
 
     @Override
@@ -53,30 +61,5 @@ public class BackgroundTaskService extends Service {
         super.onDestroy();
     }
 
-    public class InnerService extends Service {
 
-        @Override
-        public IBinder onBind(Intent intent) {
-            return null;
-        }
-
-        @Override
-        public void onCreate() {
-            super.onCreate();
-
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext());
-            startForeground(NOTIFICATION_ID, builder.build());
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    Toast.makeText(getApplicationContext(), "Cancel Notification!", Toast.LENGTH_SHORT).show();
-                    stopForeground(true);
-                    NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-                    manager.cancel(NOTIFICATION_ID);
-                    stopSelf();
-                }
-            },100);
-
-        }
-    }
 }

@@ -18,8 +18,9 @@
         <config-file parent="/*" target="AndroidManifest.xml"></config-file>
 
         <config-file parent="/manifest/application" target="AndroidManifest.xml">
-            <service android:name="com.dreamboyfire.cordova.plugin.keep_alive_mode.BackgroundTaskService" />
-            <receiver android:name="com.dreamboyfire.cordova.plugin.keep_alive_mode.AlarmReceiver" />
+            <service android:name="com.dreamboyfire.cordova.plugin.keep_alive_mode.BackgroundTaskService" android:process="com.dreamboyfire.cordova.BackgroundTaskService" />
+            <service android:name="com.dreamboyfire.cordova.plugin.keep_alive_mode.CancelNotificationService" />
+            <!--<receiver android:name="com.dreamboyfire.cordova.plugin.keep_alive_mode.AlarmReceiver" />-->
         </config-file>
 
         <source-file src="src/android/java/com/dreamboyfire/cordova/plugin/keep_alive_mode/CordovaKeepAliveMode.java"
@@ -27,6 +28,8 @@
         <source-file src="src/android/java/com/dreamboyfire/cordova/plugin/keep_alive_mode/AlarmReceiver.java"
                      target-dir="src/com/dreamboyfire/cordova/plugin/keep_alive_mode"/>
         <source-file src="src/android/java/com/dreamboyfire/cordova/plugin/keep_alive_mode/BackgroundTaskService.java"
+                     target-dir="src/com/dreamboyfire/cordova/plugin/keep_alive_mode"/>
+        <source-file src="src/android/java/com/dreamboyfire/cordova/plugin/keep_alive_mode/CancelNotificationService.java"
                      target-dir="src/com/dreamboyfire/cordova/plugin/keep_alive_mode"/>
     </platform>
 </plugin>
