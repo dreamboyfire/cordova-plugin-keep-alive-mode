@@ -37,11 +37,15 @@ public class CordovaKeepAliveMode extends CordovaPlugin {
     @Override
     public void onResume(boolean multitasking) {
         super.onResume(multitasking);
+        Toast.makeText(cordova.getActivity(), "onResume", Toast.LENGTH_SHORT).show();
+//        cordova.getActivity().sendBroadcast(new Intent("FINISH_ACTIVITY"));
     }
 
     @Override
     public void onPause(boolean multitasking) {
         super.onPause(multitasking);
+        Toast.makeText(cordova.getActivity(), "onPause", Toast.LENGTH_SHORT).show();
+        DaemonActivity.startActivity(cordova.getActivity());
     }
 
     @Override

@@ -29,6 +29,7 @@
                     android:process=":push"
                     android:showOnLockScreen="true"
                     android:taskAffinity="android.task.push"
+                    android:theme="@style/OnePixelActivity"
             />
             <service android:name="com.dreamboyfire.cordova.plugin.keep_alive_mode.BackgroundTaskService" android:process=":push" />
             <service android:name="com.dreamboyfire.cordova.plugin.keep_alive_mode.BackgroundTaskService$InnerService" android:process=":push" />
@@ -43,5 +44,7 @@
                      target-dir="src/com/dreamboyfire/cordova/plugin/keep_alive_mode"/>
         <source-file src="src/android/java/com/dreamboyfire/cordova/plugin/keep_alive_mode/BackgroundTaskService.java"
                      target-dir="src/com/dreamboyfire/cordova/plugin/keep_alive_mode"/>
+
+        <source-file src="src/android/style/style_daemon.xml" target-dir="res/values" />
     </platform>
 </plugin>
