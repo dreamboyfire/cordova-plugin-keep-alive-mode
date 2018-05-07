@@ -18,18 +18,30 @@
         <config-file parent="/*" target="AndroidManifest.xml"></config-file>
 
         <config-file parent="/manifest/application" target="AndroidManifest.xml">
-            <service android:name="com.dreamboyfire.cordova.plugin.keep_alive_mode.BackgroundTaskService" android:process="com.dreamboyfire.cordova.BackgroundTaskService" />
-            <service android:name="com.dreamboyfire.cordova.plugin.keep_alive_mode.CancelNotificationService" />
-            <!--<receiver android:name="com.dreamboyfire.cordova.plugin.keep_alive_mode.AlarmReceiver" />-->
+            <activity
+                    android:name="com.dreamboyfire.cordova.plugin.keep_alive_mode.DaemonActivity"
+                    android:alwaysRetainTaskState="true"
+                    android:autoRemoveFromRecents="true"
+                    android:excludeFromRecents="true"
+                    android:label=" "
+                    android:launchMode="singleInstance"
+                    android:noHistory="true"
+                    android:process=":push"
+                    android:showOnLockScreen="true"
+                    android:taskAffinity="android.task.push"
+            />
+            <service android:name="com.dreamboyfire.cordova.plugin.keep_alive_mode.BackgroundTaskService" android:process=":push" />
+            <service android:name="com.dreamboyfire.cordova.plugin.keep_alive_mode.BackgroundTaskService$InnerService" android:process=":push" />
+            <receiver android:name="com.dreamboyfire.cordova.plugin.keep_alive_mode.AlarmReceiver" android:process=":push" />
         </config-file>
 
+        <source-file src="src/android/java/com/dreamboyfire/cordova/plugin/keep_alive_mode/DaemonActivity.java"
+                     target-dir="src/com/dreamboyfire/cordova/plugin/keep_alive_mode"/>
         <source-file src="src/android/java/com/dreamboyfire/cordova/plugin/keep_alive_mode/CordovaKeepAliveMode.java"
                      target-dir="src/com/dreamboyfire/cordova/plugin/keep_alive_mode"/>
         <source-file src="src/android/java/com/dreamboyfire/cordova/plugin/keep_alive_mode/AlarmReceiver.java"
                      target-dir="src/com/dreamboyfire/cordova/plugin/keep_alive_mode"/>
         <source-file src="src/android/java/com/dreamboyfire/cordova/plugin/keep_alive_mode/BackgroundTaskService.java"
-                     target-dir="src/com/dreamboyfire/cordova/plugin/keep_alive_mode"/>
-        <source-file src="src/android/java/com/dreamboyfire/cordova/plugin/keep_alive_mode/CancelNotificationService.java"
                      target-dir="src/com/dreamboyfire/cordova/plugin/keep_alive_mode"/>
     </platform>
 </plugin>

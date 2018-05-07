@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.IBinder;
-import android.support.v7.app.NotificationCompat;
 import android.widget.Toast;
 
 /**
@@ -13,7 +12,7 @@ import android.widget.Toast;
  */
 public class BackgroundTaskService extends Service {
 
-    public static int NOTIFICATION_ID = -1;
+    public static int NOTIFICATION_ID = 64323;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -37,21 +36,11 @@ public class BackgroundTaskService extends Service {
         PendingIntent pendingIntent = PendingIntent.getService(getApplicationContext(), 0, testIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 60000, pendingIntent);*/
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext());
-        Notification notification = builder.build();
-
-        startForeground(NOTIFICATION_ID, notification);
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-                manager.cancel(NOTIFICATION_ID);
-            }
-        },1000);
-
-        Intent cancelNotificationServiceIntent = new Intent(this, CancelNotificationService.class);
-        startService(cancelNotificationServiceIntent);
+//        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext());
+//        Notification notification = builder.build();
+//
+        startForeground(NOTIFICATION_ID, new Notification());
+        startService(new Intent(this, InnerService.class));
 
         return START_STICKY;
     }
@@ -59,6 +48,33 @@ public class BackgroundTaskService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
+    }
+
+    public static class InnerService extends Service {
+
+        @Override
+        public IBinder onBind(Intent intent) {
+            return null;
+        }
+
+        @Override
+        public void onCreate() {
+            super.onCreate();
+
+            startForeground(NOTIFICATION_ID, new Notification());
+            stopSelf();
+        }
+
+        @Override
+        public int onStartCommand(Intent intent, int flags, int startId) {
+            return super.onStartCommand(intent, flags, startId);
+        }
+
+        @Override
+        public void onDestroy() {
+            stopForeground(true);
+            super.onDestroy();
+        }
     }
 
 

@@ -96,16 +96,18 @@ public class CordovaKeepAliveMode extends CordovaPlugin {
                     }
                 }, cordova.getActivity().BIND_AUTO_CREATE);*/
 
-                if (android.os.Build.VERSION.SDK_INT >= 26) {
+                cordova.getActivity().startService(serviceIntent);
+                /*if (android.os.Build.VERSION.SDK_INT >= 26) {
                     cordova.getActivity().startForegroundService(serviceIntent);
                 } else {
                     cordova.getActivity().startService(serviceIntent);
-                }
+                }*/
 
                 alarmReceiver = new AlarmReceiver();
                 alarmReceiver.setCallbackContext(callbackContext);
                 IntentFilter intentFilter = new IntentFilter();
                 intentFilter.addAction(Intent.ACTION_SCREEN_ON);
+                intentFilter.addAction(Intent.ACTION_SCREEN_OFF);
                 intentFilter.addAction(AlarmReceiver.ACTION_ALARM_RUN);
                 intentFilter.addAction(AlarmReceiver.ACTION_ALARM_START);
                 intentFilter.addAction(AlarmReceiver.ACTION_ALARM_STOP);
