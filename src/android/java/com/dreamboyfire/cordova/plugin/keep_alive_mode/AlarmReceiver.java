@@ -75,7 +75,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         }
 
         if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
-            Toast.makeText(context, "屏幕亮起了", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(context, "屏幕亮起了", Toast.LENGTH_SHORT).show();
             DaemonActivity.startActivity(context);
         }
 
@@ -88,16 +88,16 @@ public class AlarmReceiver extends BroadcastReceiver {
         pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            /*AlarmManager.AlarmClockInfo info = null;
+            AlarmManager.AlarmClockInfo info = null;
             try {
                 info = new AlarmManager.AlarmClockInfo(System.currentTimeMillis() + option.getIntValue("time"), pendingIntent);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            am.setAlarmClock(info, pendingIntent);*/
+            am.setAlarmClock(info, pendingIntent);
 
-            am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,
-                    System.currentTimeMillis() + option.getIntValue("time"), pendingIntent);
+            /*am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,
+                    System.currentTimeMillis() + option.getIntValue("time"), pendingIntent);*/
         }
     }
 

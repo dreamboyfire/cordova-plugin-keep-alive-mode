@@ -11,6 +11,8 @@ import android.os.PowerManager;
 import android.view.*;
 import android.widget.Toast;
 
+import java.security.acl.Group;
+
 /**
  * Created by s-guanhm on 2018/5/7.
  */
@@ -52,6 +54,11 @@ public class DaemonActivity extends Activity {
         params.height = 1;
         params.width = 1;
         window.setAttributes(params);
+
+        ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(1, 1);
+        View view = new View(getApplicationContext());
+        view.setLayoutParams(layoutParams);
+        setContentView(view);
 
         finishReceiver = new BroadcastReceiver() {
             @Override
