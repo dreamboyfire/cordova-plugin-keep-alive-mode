@@ -9,6 +9,7 @@
     <platform name="android">
         <framework src="com.alibaba:fastjson:1.2.10"/>
         <framework src="com.android.support:appcompat-v7:26.+"/>
+        <framework src="com.google.android.gms:play-services-gcm:8.1.0"/>
 
         <config-file parent="/*" target="res/xml/config.xml">
             <feature name="CordovaKeepAliveMode">
